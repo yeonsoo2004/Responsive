@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="box">자바스크립트란?</h1>
+    <p>동적 움직임을 만들 때 쓰는 겁니다.</p>
+    <p>자바스크립트는 화면에 모든 움직임을 담당합니다.</p>
+    <p>자바스크립트는 대부분 body 태그 위에 코드를 작성합니다.</p>
+    <button class="btn">클릭</button> <br>
+
+    <script>
+        document.write("안녕하세요");
+
+        let name = "홍길동";
+        
+        document.write(name);
+        document.write(name+"님");
+
+        let num1 = 30;
+        let num2 = 10;
+
+        document.write((num1+num1+num2)*2);
+        // +, -, /, *
+
+        // 변수
+        // 변수는 let과 const 두 가지 있습니다.
+        // 예전에 변수명은 var
+        const btn = document.querySelector(".btn");
+        const box = document.querySelector(".box");
+
+        btn.addEventListener("click",function() {
+            box.style.backgroundColor = "red"
+        })
+
+    </script>
+</body>
+</html>
