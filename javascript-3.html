@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="login">
+        <div class="id-box">
+            <input type="text" placeholder="아이디를 입력하세요">
+        </div>
+        <div class="password-box">
+            <input type="password" placeholder="비밀번호를 입력하세요">
+        </div>
+        <div class="login-btn">
+            <button class="login-btn">로그인</button>
+        </div>
+    </div>
+    <script>
+        let loginBtn = document.querySelector('.login-btn');
+        loginBtn.addEventListener("click", function() {
+            alert("ㅋㅋㅋ 해킹당함")
+        })
+
+        
+        let age = prompt("나이 입력하세요");
+        if(age>=19) {
+            alert("성인입니다.")
+        } else {
+            alert("미성년자 입니다.")
+        }
+    </script>
+</body>
+</html>
