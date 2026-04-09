@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>자바스크립트 if문</h1>
+    <p>만약에 비가오면 우산을 쓴다?</p>
+    <code>
+        if(조건) { <br>
+            실행할 코드 <br>
+        }
+    </code>
+    <p class="text"></p>
+    <script>
+        // 미자 890원, 성인 1200원, 노인 무료 
+        let age = prompt("나이를 입력 : ");
+        if(age<=19) {
+            // alert("성인")
+            document.querySelector('.text').innerHTML="890"
+        } else if(age>65) {
+            document.querySelector('.text').innerHTML="무료"
+        } else {
+            document.querySelector('.text').innerHTML="1200"
+        }
+    </script>
+</body>
+</html>
