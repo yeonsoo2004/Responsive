@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="name">
+    <button class="login" onclick="login()">로그인</button>
+
+    <p class="result"></p>
+
+    <script>
+        function login() {
+            let name = document.querySelector("#name").value;
+
+            if(name==="") {
+                alert("이름 입력해주세요.")
+            } else {
+                document.querySelector(".result").innerHTML=name+"님 반갑습니다.";
+            }
+            // document.querySelector(".result").innerHTML=name+"님 반갑습니다.";
+        }
+
+        // 연산자
+        // == : 일치, === : 같은 타입이면 일치
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p id="text">안녕하세요</p>
+    <!-- DOM 제어 방법 -->
+    <!-- document object model -->
+
+    <button id="btn1">클릭됨</button>
+    <hr>
+    <button id="btn2">클릭2</button>
+    <script>
+        // ES5
+        // document.getElementById("text").innerHTML = "변경됨";
+        // document.getElementsByClassName()
+
+        // ES6
+        document.querySelector("#text").innerHTML = "변경됨";
+
+        // 익명함수
+        document.querySelector("#btn1").onclick = function () {
+            alert("클릭됨");
+        }
+
+        function abc() {
+            alert("클릭 했구나");
+        }
+        document.querySelector("#btn2").onclick = abc;
+
+        function hello(name) {
+            // add(매개변수)
+            document.write(name + "님 로그인이 되셨습니다." + "<br>")
+        }
+
+        hello("정수");
+        hello("철수");
+
+        function add(a,b) {
+            return a+b;
+        }
+        let result = add(2,3);
+        document.write(result);
+    </script>
+</body>
+
+</html>
