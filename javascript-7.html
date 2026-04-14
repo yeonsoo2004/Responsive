@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>자바스크립트 addEventListener</h1>
+
+    <p>대상.이벤트("어떻게",하면)</p>
+
+    <input type="text" class="memo">
+    <button class="btn1">추가하기</button>
+    <p class="text"></p>
+
+        <code>
+            &lt;p&gt;코드 작성&lt;p&gt;  <br>
+
+            초급자 사용 방법  <br>
+            element.onclick = function() {  <br>
+
+            } <br>
+
+            element.addEventListener("click", function() {  <br>
+
+            })  <br>
+        </code>
+    <script>
+        // 버튼 가져오기
+        let btn1 = document.querySelector('.btn1');
+        // 글자 가져오기
+        let text = document.querySelector(".text");
+        // 메모 가져오기
+        let memo = document.querySelector(".memo");
+        
+        // btn1.onclick = function() {
+        //     let value = memo.value;
+        //     text.innerHTML += value + "<br>"
+        // }
+
+        btn1.onclick = function() {
+            let value = memo.value;
+
+            if(value.trim()==="") {
+                alert("입력하세요");
+                return;
+            }
+            text.innerHTML += value + "<br>";
+            memo.value = " ";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>date 객체</h1>
+    <p>현재 시간/날짜 가져오는 기능</p>
+    <code>
+        let now = new Date(); <br>
+    </code>
+    <hr>
+    <button class="btn1">현재날짜</button>
+    <p class="time"></p>
+
+    <script>
+        let btn1 = document.querySelector(".btn1");
+        let time = document.querySelector(".time");
+
+        btn1.onclick = function () {
+            // 자바스크립트에 들어가 있는 기능
+            let now = new Date();
+            let year = now.getFullYear();
+            let mot = now.getMonth() + 1;
+            let days = now.getDate();
+            let hour = now.getHours();
+            let min = now.getMinutes();
+            let sec = now.getSeconds();
+            time.innerHTML = year + "년" + mot + "월" + days + "일" + hour + "시" + min + "분" + sec +"초"
+            // document.write(year + "년" + mot + "월" + days + "일" + hour + "시" + min + "분" + sec +"초");
+        }
+    </script>
+
+</body>
+
+</html>
