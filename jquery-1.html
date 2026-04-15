@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+        
+        /* 우리가 마우스로 괴롭힐 상자 */
+        #mouseBox {
+            width: 300px;
+            height: 300px;
+            background-color: #ddd;
+            margin: 0 auto;
+            line-height: 300px; /* 글자를 상자 가운데로 */
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer; /* 마우스 올리면 손가락 모양으로 변경 */
+            user-select: none; /* 더블클릭할 때 글자 드래그 안 되게 막기 */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <p class="color-text">testtesttest</p>
+    <button class="btn1">버튼을 클릭!</button>
+    <p class="text-num">text-num</p>
+    <button class="btn2">변경대상</button> -->
+
+    <p>나는 그냥 평범한 p 태그 (단락) 입니다. 나를 숨겨보세요!</p>
+    <p>나도 그냥 평범한 p 태그 (단락) 입니다.</p>
+
+    <div id="boss" class="box">
+        나는 아이디가 boss인 대장 상자입니다. (단 하나만 존재)
+    </div>
+
+    <div class="box student">
+        나는 student 클래스를 가진 학생 상자 1 입니다.
+    </div>
+    <div class="box student">
+        나는 student 클래스를 가진 학생 상자 2 입니다.
+    </div>
+
+    <hr>
+
+    <button id="btn1">1. p 태그 모두 숨기기</button>
+    <button class="btn2">2. boss 서서히 숨기기</button>
+    <button class="btn3">3. student 모두 보여주기</button>
+
+
+    <h2 class="myTitle">이 글자는 곧 변신합니다!</h2>
+
+    <div id="secretMenu" class="box">
+        🎉 숨겨진 비밀 메뉴가 스르륵 내려왔습니다!
+    </div>
+
+    <div class="toggleBox box">
+        스위치 박스입니다. (열렸다 닫혔다 해요)
+    </div>
+
+    <hr>
+
+    <button id="btnText">1. 제목 글자 바꾸기 (.text)</button>
+    <button id="btnDown">2. 비밀메뉴 스르륵 열기 (.slideDown)</button>
+    <button id="btnUp">3. 비밀메뉴 스르륵 닫기 (.slideUp)</button>
+    <button id="btnToggle">4. 스위치 박스 껐다켜기 (.slideToggle)</button>
+    <button id="btnCss">5. 스위치 박스 색깔 바꾸기 (.css)</button>
+
+    <hr>
+    <h2>마우스 이벤트 테스트</h2>
+    <p>아래 네모 상자에 마우스를 올리거나 클릭해 보세요!</p>
+
+    <div id="mouseBox">마우스를 올려보세요!</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        //  $(".btn1").click(function() {
+        //     $(".color-text").css("color","red").css("background-color", "blue");
+        //     $(".color-text").text("tetetetete");
+        //     alert("hi")
+        //  })
+        //  $(".btn2").mouseover(function() {
+        //     $(".text-num").slideUp();
+        //  })
+
+        // $("#btn1").click(function() {
+        //     $("p").hide();
+        // });
+
+        // $(".btn2").click(function() {
+        //     $("#boss").fadeOut(1000)
+        //     $(".student").hide();
+        // })
+
+        // $(".btn3").mouseover(function() {
+        //     $(".student").show();
+        // })
+
+
+
+
+        // $("#btnText").click(function () {
+        //     $(".myTitle").text("text");
+        // })
+
+        // $("#btnUp").click(function () {
+        //     $("#secretMenu").slideUp(500);
+        // })
+        // $("#btnDown").mouseover(function () {
+        //     $("#secretMenu").slideDown(500);
+        // })
+
+        // $("#btnToggle").click(function () {
+        //     $(".toggleBox").slideToggle("slow"); // 시간을 "slow", "fast" 로 적어도 됩니다.
+        // });
+
+        // $("#btnCss").click(function () {
+        //     $(".toggleBox").css("background-color", "lightpink");
+        // });
+
+
+        $("#mouseBox").mousemove(function() {
+            $("div").css("background-color", "lightblue");
+        })
+        // $("#mouseBox").mouseup(function() {
+        //     $("div").css("background-color", "lightblue");
+        // })
+    </script>
+</body>
+
+</html>

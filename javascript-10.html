@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>요일 구하는 방법</h2>
+    <code>
+        let now = new Date();  <br>
+        // 0 일요일~6 토요일  <br>
+        let days = ["일", "월", "화", "수", "목", "금", "토"]; <br>
+        let day = days[now.getDay()]; <br><br>
+
+        let year = now.getFullYear(); <br>
+        let mot = now.getMonth() + 1; <br>
+        let date = now.getDate(); <br>
+        // 2026-04-15 (수요일) <br>
+
+        document.write(year + "-" + mot + "-" + date + " (" + day + "요일)"); <br>
+    </code>
+
+    <h3>실시간 시계</h3>
+    <p class="clock"></p>
+    <code>
+        let clock = document.querySelector(".clock"); <br><br>
+
+        function updateClock() { <br>
+            let now = new Date(); <br>
+            let h = now.getHours(); <br>
+            let m = now.getMinutes(); <br>
+            let s = now.getSeconds(); <br><br>
+            
+            clock.innerHTML = h + ":" + m + ":" + s; <br>
+        } <br>
+        setInterval(updateClock); <br>
+    </code>
+    <script>
+        // let now = new Date();
+        // 0 일요일~6 토요일
+        // let days = ["일", "월", "화", "수", "목", "금", "토"];
+        // let day = days[now.getDay()];
+
+        // let year = now.getFullYear();
+        // let mot = now.getMonth() + 1;
+        // let date = now.getDate();
+        // 2026-04-15 (수요일)
+
+        // document.write(year + "-" + mot + "-" + date + " (" + day + "요일)");
+
+
+
+        let clock = document.querySelector(".clock");
+
+        function updateClock() {
+            let now = new Date();
+            let h = now.getHours();
+            let m = now.getMinutes();
+            let s = now.getSeconds();
+            
+            clock.innerHTML = h + ":" + m + ":" + s;
+        }
+        setInterval(updateClock,1000);
+    </script>
+</body>
+
+</html>
