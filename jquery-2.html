@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button {
+            background-color: pink;
+            border-radius: 30px;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: lightcoral;
+        }
+
+        p {
+            font-size: 20px;
+            font-weight: 700;
+            color: navy;
+        }
+        .ani {
+            background-color: lightblue;
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+        .box-2 {
+            background-color: lightcoral;
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="text1">작동을 하게 하는 방법</p>
+    <button class="hide-btn">Hide</button>
+    <button class="show-btn">Show</button>
+    <button class="toggle-btn">Toggle</button>
+    <hr>
+    <p class="text2">완전 애니메이션</p>
+    <button class="fade-in">FadeIn</button>
+    <button class="fade-out">FadeOut</button>
+    <button class="fade-toggle">fadeToggle</button>
+    <hr>
+
+    <p class="text3">슬라이드</p>
+    <button class="slide-down">down</button>
+    <button class="slide-up">up</button>
+    <button class="slide-toggle">toggle</button>
+    <hr>
+
+    <div class="ani"></div>
+    <button class="ani-btn-1">ani-1</button>
+    <button class="ani-btn-2">ani-2</button>
+    <button class="ani-btn-3">ani-3</button>
+    <hr>
+
+    <div class="box-2">글자크기</div>
+    <button class="mot-btn">모션</button>
+    
+
+    <script src="js/libs/jquery.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
