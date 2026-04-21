@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        header {
+            background-color: lightblue;
+        }
+        li {
+            list-style: none;
+        }
+        header ul {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+        .mo-navi {
+            display: none;
+        }
+        @media(max-width:768px) {
+            /* header ul {
+                flex-direction: column;
+                display: none;
+                text-align: center;
+            } */
+             header ul {
+                flex-direction: column;
+                position: absolute;
+                width: 50%;
+                height: 100%;
+                z-index: 99;
+                top: 0;
+                left: -50%;
+                background-color: blue;
+                transition: all 0.3s;
+            }
+             header li {
+                margin:  10px 0;
+             }
+            .mo-navi {
+                display: flex;
+                justify-content: flex-end;
+                padding: 20px 0;
+            }
+            .mo-navi img{
+                margin-right: 30px;
+                width: 60px;
+                cursor: pointer;
+            }
+            .block {
+                display: flex;
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="mo-navi">
+            <img src="images/menu.png" alt="" srcset="">
+        </div>
+        <ul>
+        <li><a href="#">홈</a></li>
+        <li><a href="#">블로그</a></li>
+        <li><a href="#">카페</a></li>
+        <li><a href="#">1등/2등</a></li>
+        <li><a href="#">추카추카</a></li>
+        </ul>
+        
+    </header>
+    <script src="js/libs/jquery.min.js"></script>
+    <script>
+        $(".mo-navi").click(function() {
+            $("header ul").toggleClass("block");
+        })
+    </script>
+</body>
+</html>
