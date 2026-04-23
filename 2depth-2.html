@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/b9593720fc.js" crossorigin="anonymous" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            padding: 10px;
+        }
+
+        header {
+            background-color: #eee;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            text-align: center;
+        }
+
+        .menu>li {
+            position: relative;
+        }
+
+        .sub {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ddd;
+            display: none;
+        }
+
+        .menu-btn {
+            display: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        @media(max-width:768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            .menu {
+                display: none;
+                flex-direction: column;
+            }
+
+            .menu.active {
+                display: flex;
+            }
+
+            .sub {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="menu-btn">
+            <i class="fa-solid fa-bars mo-navi"></i>
+        </div>
+        <ul class="menu">
+            <li>
+                <a href="#">메뉴 1</a>
+                <ul class="sub">
+                    <li><a href="#">서브메뉴1</a></li>
+                    <li><a href="#">서브메뉴2</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">메뉴 2</a>
+                <ul class="sub">
+                    <li><a href="#">서브메뉴1</a></li>
+                    <li><a href="#">서브메뉴2</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">메뉴 3</a>
+                <ul class="sub">
+                    <li><a href="#">서브메뉴1</a></li>
+                    <li><a href="#">서브메뉴2</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </header>
+    <script src="js/libs/jquery.min.js"></script>
+    <script>
+        // hover는 pc에만 있음
+        $(".menu > li").hover(function () {
+            if (window.innerWidth > 768) {
+                $(this).find(".sub").stop().slideDown();
+            }
+        }, function () {
+            if (window.innerWidth > 768) {
+                $(this).find(".sub").stop().slideUp();
+            }
+        })
+
+        // 👉모바일메뉴
+        $(".menu-btn").click(function () {
+            $(".menu").toggleClass("active")
+        })
+
+        // 👉모바일 아코디언
+        $(".menu > li > a").click(function(e) {
+            // 기본 속성 초기화
+            e.preventDefault();
+            
+            // a태그에 자식요소 ul을 선택한 것
+            let sub = $(this).next(".sub");
+            // 모든 .sub중에서 방금 클릭한거 제외하고 나머지 슬라이드 업
+            $(".sub").not(sub).slideUp();
+            // 열려있으면 닫힘, 닫혀있으면 열림
+            sub.slideToggle();
+        })
+    </script>
+</body>
+
+</html>
