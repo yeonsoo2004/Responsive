@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Accordion - Default functionality</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.2/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".qna").accordion({
+                active: false,     // 처음부터 닫힘
+                collapsible: true  // 모두 닫히는 상태 허용
+            });
+
+            $(document).tooltip();
+        });
+    </script>
+    <style>
+        .row {
+            display: flex;
+        }
+
+        .col-6 {
+            width: 50%;
+        }
+
+        .qna-title {
+            background-color: pink;
+            border: 1px solid pink;
+        }
+
+        .ui-accordion .ui-accordion-header {
+            position: relative;
+        }
+
+        .ui-accordion .ui-accordion-header .ui-icon {
+            position: absolute;
+            right: 10px;
+            /* 오른쪽 끝 */
+            left: auto;
+            /* 왼쪽 제거 */
+        }
+    </style>
+</head>
+
+<body>
+    <section class="content">
+        <div class="row">
+            <div class="col-6">
+                <h3>자주 묻는 질문</h3>
+            </div>
+            <div class="col-6">
+                <div class="qna">
+                    <h3 class="qna-title">Lorem ipsum dolor sit amet consectetur</h3>
+                    <div class="qna-body">
+                        <p>Lorem ipsum dolor sit <a href="#" title="abc?">amet</a> consectetur, adipisicing elit.
+                            Perspiciatis</p>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis</p>
+                    </div>
+                    <h3 class="qna-title">Lorem ipsum dolor sit amet consectetur</h3>
+                    <div class="qna-body">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis</p>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
