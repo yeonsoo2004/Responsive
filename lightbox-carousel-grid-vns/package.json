@@ -1,0 +1,53 @@
+{
+	"name": "VNS.Gallery",
+	"version": "1.0.6",
+	"description": "A flexible jQuery image gallery plugin with thumbnails, lightbox, carousel, and grid view",
+	"main": "dist/vns-gallery.js",
+	"style": "dist/vns-gallery.css",
+	"scripts": {
+		"clean": "rm -rf dist && mkdir -p dist",
+		"build:js": "concat-cli -f src/license-notice.txt src/vns-gallery.js -o dist/vns-gallery.js",
+		"build:css": "concat-cli -f src/license-notice.txt src/vns-gallery.css -o dist/vns-gallery.css",
+		"minify:js": "terser dist/vns-gallery.js --compress --mangle --comments '/^!/' -o dist/vns-gallery.min.js --preamble \"$(cat src/license-notice.txt)\"",
+		"minify:css": "cleancss -o dist/vns-gallery.min.css dist/vns-gallery.css --source-map",
+		"build": "npm run clean && npm run build:js && npm run build:css && npm run minify:js && npm run minify:css",
+		"version": "npm run build && git add -A dist",
+		"postversion": "git push && git push --tags",
+		"test": "echo \"No tests specified\""
+	},
+	"keywords": [
+		"jquery",
+		"gallery",
+		"lightbox",
+		"carousel",
+		"images",
+		"responsive",
+		"thumbnail",
+		"modal",
+		"image-viewer"
+	],
+	"author": "Martin H. Schläger",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/schlagerdk/VNS.Gallery.git"
+	},
+	"bugs": {
+		"url": "https://github.com/schlagerdk/VNS.Gallery/issues"
+	},
+	"homepage": "https://github.com/schlagerdk/VNS.Gallery#readme",
+	"peerDependencies": {
+		"jquery": "^3.0.0"
+	},
+	"files": [
+		"dist/",
+		"src/",
+		"README.md",
+		"LICENSE"
+	],
+	"devDependencies": {
+		"clean-css-cli": "^5.6.3",
+		"concat-cli": "^4.0.0",
+		"terser": "^5.44.1"
+	}
+}

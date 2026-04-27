@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeMarquee JavaScript Demo</title>
+    <style>
+        :root {
+            --bg: #07090d;
+            --panel: #101215;
+            --panel-strong: #171a1f;
+            --line: rgba(255, 255, 255, 0.1);
+            --text: #f3f5f7;
+            --muted: #9aa3ad;
+            --accent: #d7dbe0;
+            --accent-soft: rgba(215, 219, 224, 0.1);
+            --accent-2: #8f98a3;
+            --accent-3: #5f6770;
+            --chip: #1b1f25;
+            --shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            color-scheme: dark;
+        }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            background:
+                radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 30%),
+                radial-gradient(circle at 85% 12%, rgba(255, 255, 255, 0.05), transparent 24%),
+                linear-gradient(180deg, #0e1115 0%, #07090d 52%, #05070a 100%);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .page-shell {
+            width: min(1200px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 32px 0 56px;
+            overflow-x: clip;
+        }
+
+        .hero {
+            width: 100%;
+            text-align: center;
+            padding: 56px 24px 36px;
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+                rgba(12, 16, 23, 0.86);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: auto;
+            width: 260px;
+            height: 260px;
+            border-radius: 999px;
+            filter: blur(18px);
+            opacity: 0.18;
+            pointer-events: none;
+        }
+
+        .hero::before {
+            background: var(--accent);
+            top: -90px;
+            left: -60px;
+        }
+
+        .hero::after {
+            background: var(--accent-3);
+            right: -80px;
+            bottom: -120px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            padding: 7px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #dfe4ea;
+            font: 600 12px/1.1 Arial, Helvetica, sans-serif;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2.5rem, 5vw, 4.8rem);
+            line-height: 0.96;
+            letter-spacing: -0.04em;
+        }
+
+        .description {
+            width: min(760px, 100%);
+            margin: 18px auto 0;
+            color: var(--muted);
+            font: 400 1.02rem/1.72 Arial, Helvetica, sans-serif;
+        }
+
+        .hero-band {
+            margin-top: 28px;
+            padding-top: 26px;
+            border-top: 1px solid var(--line);
+        }
+
+        .hero-band .be-marquee-inner {
+            align-items: center;
+        }
+
+        .band-item {
+            padding: 14px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            color: #f6f8fa;
+            font: 700 0.93rem/1 Arial, Helvetica, sans-serif;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .card {
+            padding: 24px;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+                var(--panel);
+            box-shadow: var(--shadow);
+            min-width: 0;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+        }
+
+        .card p {
+            margin: 10px 0 0;
+            color: var(--muted);
+            font: 400 0.97rem/1.65 Arial, Helvetica, sans-serif;
+        }
+
+        .chip {
+            flex: 0 0 auto;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--chip);
+            color: #d8dde4;
+            font: 700 0.75rem/1 Arial, Helvetica, sans-serif;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .meta span {
+            padding: 7px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.02);
+            color: #bcc4cd;
+            font: 600 0.73rem/1 Arial, Helvetica, sans-serif;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .demo-surface {
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0)),
+                var(--panel-strong);
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .demo-surface.tall {
+            min-height: 250px;
+        }
+
+        .be-marquee {
+            border-radius: 18px;
+            max-width: 100%;
+        }
+
+        .be-marquee-inner {
+            align-items: stretch;
+            max-width: 100%;
+        }
+
+        .tile,
+        .pill,
+        .metric {
+            white-space: nowrap;
+        }
+
+        .tile {
+            padding: 18px 22px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
+            min-width: min(180px, calc(100vw - 96px));
+            max-width: min(320px, calc(100vw - 96px));
+        }
+
+        .tile strong,
+        .note strong {
+            display: block;
+            font: 700 1rem/1.2 Arial, Helvetica, sans-serif;
+            letter-spacing: 0.01em;
+        }
+
+        .tile small,
+        .note small,
+        .metric small {
+            display: block;
+            margin-top: 8px;
+            color: #aab2bc;
+            font: 400 0.83rem/1.45 Arial, Helvetica, sans-serif;
+            white-space: normal;
+        }
+
+        .pill {
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #e6ebf0;
+            font: 700 0.9rem/1 Arial, Helvetica, sans-serif;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            max-width: calc(100vw - 96px);
+        }
+
+        .note {
+            padding: 16px 18px;
+            border-left: 3px solid var(--accent-3);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .metric {
+            padding: 18px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            min-width: min(180px, calc(100vw - 96px));
+            max-width: min(260px, calc(100vw - 96px));
+        }
+
+        .metric strong {
+            display: block;
+            color: #f2f5f8;
+            font-size: 1.45rem;
+            line-height: 1;
+            letter-spacing: -0.04em;
+        }
+
+        .stack {
+            display: grid;
+            gap: 12px;
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            text-align: center;
+            color: #7f8892;
+            font: 400 0.9rem/1.6 Arial, Helvetica, sans-serif;
+        }
+
+        @media (max-width: 920px) {
+            .card-header {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page-shell {
+                width: min(100% - 20px, 1200px);
+                padding-top: 20px;
+                padding-bottom: 36px;
+            }
+
+            .hero,
+            .card {
+                padding: 20px;
+                border-radius: 22px;
+            }
+
+            .demo-surface {
+                padding: 14px;
+            }
+
+            .band-item,
+            .pill {
+                font-size: 0.82rem;
+            }
+
+            .tile,
+            .metric,
+            .note {
+                min-width: 0;
+                max-width: calc(100vw - 72px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page-shell">
+        <section class="hero">
+            <div class="eyebrow">Vanilla JavaScript Marquee Demo</div>
+            <h1>BeMarquee Live Examples</h1>
+            <style>
+.download{ padding: 1.25rem; border:0; border-radius:3px; background-color:#4F46E5; color:#fff;cursor:pointer; text-decoration:none;}.download:hover{color: #fff}#carbonads{display:block;overflow:hidden;max-width:728px;position:relative;font-size:22px;box-sizing:content-box}#carbonads>span{display:block}#carbonads a{color:#4F46E5;text-decoration:none}#carbonads a:hover{color:#4F46E5}.carbon-wrap{display:flex;align-items:center}.carbon-img{display:block;margin:0;line-height:1}.carbon-img img{display:block;height:90px;width:auto}.carbon-text{display:block;padding:0 1em;line-height:1.35;text-align:left}.carbon-poweredby{display:block;position:absolute;bottom:0;right:0;padding:6px 10px;text-align:center;text-transform:uppercase;letter-spacing:.5px;font-weight:600;font-size:8px;border-top-left-radius:4px;line-height:1;color:#aaa!important}@media only screen and (min-width:320px) and (max-width:759px){.carbon-text{font-size:14px}}
+</style>
+<div><div id="carbon-block"></div><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2783044520727903"
+     crossorigin="anonymous"></script>
+<!-- jQuery_Replace_Demo -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2783044520727903"
+     data-ad-slot="7325992188"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<p style="margin:2rem auto"><a class="download" href="https://www.jqueryscript.net/animation/scrolling-ticker-marquee.html">Download This Plugin</a> <a class="download" href="https://www.jqueryscript.net/">Back To jQueryScript</a></p>
+            <p class="description">
+                A jQuery & Vanilla JS marquee plugin for horizontal and vertical scrolling strips with loop, pause on hover, click toggle, and inline JSON config.
+            </p>
+            <div class="hero-band">
+                <div class="be-marquee" data-settings='{"gap":18,"speed":1.1,"reverse_on_hover":true,"pause_on_hover":false}'>
+                    <div class="be-marquee-inner">
+                        <div class="band-item">Pure JavaScript</div>
+                        <div class="band-item">Hover Reverse</div>
+                        <div class="band-item">Optional Click Pause</div>
+                        <div class="band-item">Horizontal And Vertical</div>
+                        <div class="band-item">No Build Required</div>
+                        <div class="band-item">Single File Demo</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-grid">
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <h2>Continuous Horizontal Flow</h2>
+                        <p>This preserves the original horizontal demo, then presents it in a wider editorial track with click pause and hover reverse for easier interaction testing.</p>
+                    </div>
+                    <span class="chip">Original Demo Preserved</span>
+                </div>
+                <div class="meta">
+                    <span>Gap 40</span>
+                    <span>Reverse On Hover</span>
+                    <span>Pause On Click</span>
+                </div>
+                <div class="demo-surface">
+                    <div class="be-marquee" data-settings='{"gap":40,"reverse_on_hover":true,"pause_on_click":true}'>
+                        <div class="be-marquee-inner">
+                            <div class="tile"><strong>Release Notes</strong><small>Use this format for product headlines, launch tags, or feature strips.</small></div>
+                            <div class="tile"><strong>Event Timeline</strong><small>Keep spacing wide enough when cards include multi-line labels and details.</small></div>
+                            <div class="tile"><strong>Brand Messages</strong><small>Hover once to reverse direction. Click anywhere inside the track to pause.</small></div>
+                            <div class="tile"><strong>Promo Labels</strong><small>The script duplicates content when looping needs more width.</small></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <h2>Vertical Auto-Height Loop</h2>
+                        <p>This keeps the original vertical example and expands it into a stacked announcement rail that grows to fit its content.</p>
+                    </div>
+                    <span class="chip">Original Demo Preserved</span>
+                </div>
+                <div class="meta">
+                    <span>Vertical</span>
+                    <span>Auto Height</span>
+                    <span>Loop</span>
+                    <span>Reverse On Hover</span>
+                </div>
+                <div class="demo-surface tall">
+                    <div class="be-marquee" data-settings='{"vertical":true,"auto_height":true,"reverse_on_hover":true,"gap":20,"loop":true}'>
+                        <div class="be-marquee-inner">
+                            <div class="note"><strong>Status Update</strong><small>Vertical mode works well for bulletins, store notices, and compact dashboard feeds.</small></div>
+                            <div class="note"><strong>Queue Notice</strong><small>Auto height removes the need to manually tune container height for short content sets.</small></div>
+                            <div class="note"><strong>Editor Pick</strong><small>Hover over the module to flip the travel direction without reloading the page.</small></div>
+                            <div class="note"><strong>Support Window</strong><small>Looping continues as long as enough content exists to duplicate inside the inner wrapper.</small></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <h2>Right-To-Left Alternative</h2>
+                        <p>This variation switches the direction so the same component can match ticker layouts that enter from the left edge and move right.</p>
+                    </div>
+                    <span class="chip">Direction Control</span>
+                </div>
+                <div class="meta">
+                    <span>Direction Right</span>
+                    <span>Pause On Hover</span>
+                    <span>Gap 24</span>
+                </div>
+                <div class="demo-surface">
+                    <div class="be-marquee" data-settings='{"direction":"right","gap":24,"speed":0.8,"pause_on_hover":true}'>
+                        <div class="be-marquee-inner">
+                            <div class="pill">Top Stories</div>
+                            <div class="pill">Product Alerts</div>
+                            <div class="pill">Store Credits</div>
+                            <div class="pill">Member Deals</div>
+                            <div class="pill">Updated Inventory</div>
+                            <div class="pill">Daily Schedule</div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <h2>Delayed Start Headlines</h2>
+                        <p>A start delay gives the viewer a brief reading window before movement begins, which suits hero highlights and announcement bars.</p>
+                    </div>
+                    <span class="chip">Start Delay</span>
+                </div>
+                <div class="meta">
+                    <span>Delay 1400ms</span>
+                    <span>Speed 1.4</span>
+                    <span>Hover Pause</span>
+                </div>
+                <div class="demo-surface">
+                    <div class="be-marquee" data-settings='{"gap":28,"speed":1.4,"start_delay":1400,"pause_on_hover":true}'>
+                        <div class="be-marquee-inner">
+                            <div class="metric"><strong>24/7</strong><small>Service availability label for dashboards, portal headers, or maintenance notice strips.</small></div>
+                            <div class="metric"><strong>5 Regions</strong><small>Useful when each item needs both a short metric and a supporting line.</small></div>
+                            <div class="metric"><strong>3 Modes</strong><small>Motion starts after a short delay, so the initial content remains readable.</small></div>
+                            <div class="metric"><strong>1 Script</strong><small>No compile step is required for this standalone demo page.</small></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <h2>Clickable Pause Rail</h2>
+                        <p>This layout uses compact tokens to show how the marquee behaves when users need to freeze a moving list and inspect a single item.</p>
+                    </div>
+                    <span class="chip">Interaction Focus</span>
+                </div>
+                <div class="meta">
+                    <span>Pause On Click</span>
+                    <span>Gap 16</span>
+                    <span>Speed 1.2</span>
+                </div>
+                <div class="demo-surface">
+                    <div class="be-marquee" data-settings='{"gap":16,"speed":1.2,"pause_on_click":true,"pause_on_hover":false}'>
+                        <div class="be-marquee-inner">
+                            <div class="pill">Minimal API</div>
+                            <div class="pill">Looping Track</div>
+                            <div class="pill">Click To Stop</div>
+                            <div class="pill">Click To Resume</div>
+                            <div class="pill">Small Content Cards</div>
+                            <div class="pill">Inline Labels</div>
+                            <div class="pill">Simple Markup</div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <div>
+                        <h2>Single-Pass Non-Looping Track</h2>
+                        <p>Looping can be disabled when the marquee should stop after a full pass, which helps with finite updates or one-time notice strips.</p>
+                    </div>
+                    <span class="chip">Finite Motion</span>
+                </div>
+                <div class="meta">
+                    <span>Loop False</span>
+                    <span>Speed 1</span>
+                    <span>Pause On Hover</span>
+                </div>
+                <div class="demo-surface">
+                    <div class="be-marquee" data-settings='{"loop":false,"gap":22,"speed":1,"pause_on_hover":true}'>
+                        <div class="be-marquee-inner">
+                            <div class="stack tile"><strong>Stage One</strong><small>The content moves across the viewport once instead of repeating forever.</small></div>
+                            <div class="stack tile"><strong>Stage Two</strong><small>Use finite motion when the track should behave more like a guided reveal.</small></div>
+                            <div class="stack tile"><strong>Stage Three</strong><small>Hover pause still works until the strip reaches its natural stopping point.</small></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <p class="footer-note">Open this file directly in a browser to preview every example with the local <code>bemarquee.js</code> script.</p>
+    </main>
+
+    <script src="bemarquee.js"></script><script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script><script async src="https://www.googletagmanager.com/gtag/js?id=G-1VDDWMRSTH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1VDDWMRSTH');
+</script>
+</body>
+</html>

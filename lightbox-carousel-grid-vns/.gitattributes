@@ -1,0 +1,25 @@
+# Enforce Unix line endings for shell scripts
+*.sh text eol=lf
+
+# Normalize line endings for text files
+* text=auto
+
+# Specific file types
+*.js text eol=lf
+*.css text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.html text eol=lf
+*.txt text eol=lf
+
+# Dist files should also use LF
+dist/*.js text eol=lf
+dist/*.css text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.map binary

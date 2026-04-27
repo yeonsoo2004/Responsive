@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Marquee Example</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 마키 컨테이너 - 프리미엄한 느낌을 위해 여백을 충분히 줍니다 */
+        .my-gallery {
+            width: 100%;
+            padding: 50px 0;
+            background-color: #fff; /* 밝고 깨끗한 배경 */
+            overflow: hidden;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* 이미지들이 한 줄로 나열되도록 설정 */
+        .be-marquee-inner {
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-item {
+            display: inline-block;
+            margin-right: 100px; /* 이미지 사이의 간격 */
+        }
+
+        /* 이미지 크기 조절 - 높이를 고정하면 깔끔하게 정렬됩니다 */
+        .marquee-item img {
+            height: 60px; /* 로고나 아이콘 크기에 맞춰 조절하세요 */
+            width: auto;
+            transition: all 0.3s;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="my-gallery be-marquee">
+        <div class="be-marquee-inner">
+            <div class="marquee-item"><img src="https://i.namu.wiki/i/XSIOAAJo3KQI6q9CtG7Zs35kWdJDGJytIUResnjEOP4v3Z5MpOXUD9KUkg3BrcdqZKNiH73iP9u3bATIX87Fhg.svg" alt="브랜드 로고1"></div>
+            <div class="marquee-item"><img src="https://mis-prod-koce-skhynixhomepage-cdn-01-ep.azureedge.net/img/content/img_ci02.png" alt="브랜드 로고2"></div>
+            <div class="marquee-item"><img src="https://i.namu.wiki/i/Iu9zZQJ6VDhoEC3goMITaHnBNOAbxz5buSqhkMwnNcjBIvbURav08bsIPoY9pn7EBu-Hqlp-x94o6rD8J3vJ2g.svg" alt="브랜드 로고3"></div>
+            <div class="marquee-item"><img src="https://i.namu.wiki/i/OcgLx48LOb3o18RJlGqGzeto0QQulw7IKxhyHzUxEs9ScJfqgTkR8sPfYQHY2moCs96VvPBkv4ZtRfbwWDaulw.svg" alt="브랜드 로고4"></div>
+            <div class="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/commons/3/33/DB_Logo.svg" alt="브랜드 로고5"></div>
+        </div>
+    </div>
+
+    <script src="../js/libs/jquery.min.js"></script>
+    <script src="assets/js/bemarquee.jquery.js"></script>
+    <script>
+        $(window).on('load', function() {
+            // 이미지의 경우 로딩 시간이 필요하므로 'load' 시점에 실행하는 것이 더 안전합니다.
+            $('.be-marquee').beMarquee({
+                speed: 1.2,       // 흐르는 속도
+                direction: 'left', 
+                pauseOnHover: true 
+            });
+        });
+    </script>
+</body>
+</html>

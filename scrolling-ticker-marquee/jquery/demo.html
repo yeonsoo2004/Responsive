@@ -1,0 +1,29 @@
+<!DOCTYPE html><html><head>
+</head><body>
+<h2>jQuery v3</h2>
+<div class="be-marquee" data-settings='{"direction":right, gap":50,"reverse_on_hover":true, "loop":true}'>
+    <div class="be-marquee-inner">
+        <div class="marquee-item">A</div>
+        <div class="marquee-item">B</div>
+    </div>
+</div>
+<div class="be-marquee"
+     data-settings='{
+        "vertical": true,
+        "auto_height": true,
+        "reverse_on_hover":true,
+        "gap": 20,
+        "loop": true
+     }'>
+
+    <div class="be-marquee-inner">
+        <div class="marquee-item">Item 1</div>
+        <div class="marquee-item">Item 2</div>
+        <div class="marquee-item">Item 3</div>
+    </div>
+
+</div>
+<style>.marquee-item{padding:10px;background:#222;color:#fff;margin:5px;}</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="bemarquee.jquery.js"></script>
+</body></html>

@@ -1,0 +1,601 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VNS.Gallery jQuery Plugin Examples</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dist/vns-gallery.css">
+    <style>
+        :root {
+            --bg-body: #0a0a0a;
+            --bg-card: #171717;
+            --bg-panel: #262626;
+            --text-primary: #ededed;
+            --text-secondary: #a1a1aa;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: #404040;
+            --radius: 12px;
+            --spacing-container: 1200px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--spacing-container);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 80px 0 60px;
+            text-align: center;
+            background: radial-gradient(circle at center, #1e1e24 0%, var(--bg-body) 100%);
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 0 0 10px;
+            background: linear-gradient(to right, #fff, #a5a5a5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .section-header h2 {
+            font-size: 1.75rem;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .section-header p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Cards & Demos */
+        .demo-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 30px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .code-snippet {
+            background: #0d0d0d;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #e5e5e5;
+            overflow-x: auto;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .code-snippet .keyword { color: #c678dd; }
+        .code-snippet .string { color: #98c379; }
+        .code-snippet .function { color: #61afef; }
+        .code-snippet .property { color: #e06c75; }
+
+        /* Controls */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg-panel);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: #333;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        /* Console Log Box */
+        .console-log {
+            background: #000;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            height: 150px;
+            overflow-y: auto;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #4ade80;
+            margin-top: 20px;
+        }
+        .console-log div { margin-bottom: 4px; border-bottom: 1px solid #222; padding-bottom: 2px; }
+        .console-log span.time { color: #666; margin-right: 8px; }
+
+        /* Grid Layout for Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Interactive Builder */
+        .builder-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+
+        .builder-controls {
+            background: var(--bg-panel);
+            padding: 20px;
+            border-radius: var(--radius);
+            max-height: 800px;
+            overflow-y: auto;
+        }
+
+        .builder-preview {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background: #111;
+            color: var(--text-primary);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-group input { margin: 0; }
+        .checkbox-group label { margin: 0; cursor: pointer; }
+
+        @media (max-width: 900px) {
+            .builder-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #333;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>VNS.Gallery jQuery Plugin Examples</h1>
+            <style>
+.download{ padding: 1.25rem; border:0; border-radius:3px; background-color:#4F46E5; color:#fff;cursor:pointer; text-decoration:none;}.download:hover{color: #fff}#carbonads{display:block;overflow:hidden;max-width:728px;position:relative;font-size:22px;box-sizing:content-box}#carbonads>span{display:block}#carbonads a{color:#4F46E5;text-decoration:none}#carbonads a:hover{color:#4F46E5}.carbon-wrap{display:flex;align-items:center}.carbon-img{display:block;margin:0;line-height:1}.carbon-img img{display:block;height:90px;width:auto}.carbon-text{display:block;padding:0 1em;line-height:1.35;text-align:left}.carbon-poweredby{display:block;position:absolute;bottom:0;right:0;padding:6px 10px;text-align:center;text-transform:uppercase;letter-spacing:.5px;font-weight:600;font-size:8px;border-top-left-radius:4px;line-height:1;color:#aaa!important}@media only screen and (min-width:320px) and (max-width:759px){.carbon-text{font-size:14px}}
+</style>
+<div><div id="carbon-block"></div><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2783044520727903"
+     crossorigin="anonymous"></script>
+<!-- jQuery_Replace_Demo -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2783044520727903"
+     data-ad-slot="7325992188"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<p style="margin:2rem auto"><a class="download" href="https://www.jqueryscript.net/gallery/lightbox-carousel-grid-vns.html">Download</a> <a class="download" href="https://www.jqueryscript.net/">Back To jQueryScript</a></p>
+            <p>A modern, lightweight jQuery gallery with touch support, grid layouts, and lightbox.</p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- 1. Hero / Basic Usage -->
+        <section>
+            <div class="section-header">
+                <h2>Essentials</h2>
+                <p>The core carousel experience.</p>
+            </div>
+            <div class="demo-card">
+                <div class="gallery-basic">
+                    <img src="https://placehold.co/500x500/333/fff?text=Thumb+01" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+01" alt="Mountain View">
+                    <img src="https://placehold.co/500x500/333/fff?text=Thumb+02" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+02" alt="Lake Calm">
+                    <img src="https://placehold.co/500x500/333/fff?text=Thumb+03" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+03" alt="Forest Path">
+                    <img src="https://placehold.co/500x500/333/fff?text=Thumb+04" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+04" alt="City Lights">
+                    <img src="https://placehold.co/500x500/333/fff?text=Thumb+05" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+05" alt="Sunset Beach">
+                    <img src="https://placehold.co/500x500/333/fff?text=Thumb+06" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+06" alt="Winter Snow">
+                    <img src="https://placehold.co/500x500/333/fff?text=Thumb+07" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+07" alt="Desert Dunes">
+                    <img src="https://placehold.co/500x500/333/fff?text=Thumb+08" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+08" alt="Autumn Leaves">
+                </div>
+                <div class="code-snippet">
+                    <span class="function">$</span>(<span class="string">'.gallery-basic'</span>).<span class="function">vnsGallery</span>();
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Grid & Layouts -->
+        <section>
+            <div class="section-header">
+                <h2>Layouts</h2>
+                <p>From static grids to infinite carousels.</p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Static Grid -->
+                <div class="demo-card">
+                    <h3>Static Grid</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 15px;">A classic grid layout without carousel navigation. Shows a "Load More" indicator.</p>
+                    <div class="gallery-static">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+09" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+09" alt="Image 9">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+10" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+10" alt="Image 10">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+11" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+11" alt="Image 11">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+12" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+12" alt="Image 12">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+13" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+13" alt="Image 13">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+14" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+14" alt="Image 14">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+15" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+15" alt="Image 15">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+16" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+16" alt="Image 16">
+                    </div>
+                </div>
+
+                <!-- Infinite Loop -->
+                <div class="demo-card">
+                    <h3>Infinite Loop</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 15px;">Continuous navigation with touch/swipe support enabled.</p>
+                    <div class="gallery-loop">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+17" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+17" alt="Image 17">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+18" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+18" alt="Image 18">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+19" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+19" alt="Image 19">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+20" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+20" alt="Image 20">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+21" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+21" alt="Image 21">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+22" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+22" alt="Image 22">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. High Density -->
+        <section>
+             <div class="section-header">
+                <h2>High Density</h2>
+                <p>Handling large collections.</p>
+            </div>
+            <div class="demo-card">
+                <h3>10-Column Mode</h3>
+                <div class="gallery-high-density">
+                    <!-- Generating many images for effect -->
+                    <img src="https://placehold.co/200x200/333/fff?text=01" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+01" alt="01">
+                    <img src="https://placehold.co/200x200/333/fff?text=02" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+02" alt="02">
+                    <img src="https://placehold.co/200x200/333/fff?text=03" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+03" alt="03">
+                    <img src="https://placehold.co/200x200/333/fff?text=04" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+04" alt="04">
+                    <img src="https://placehold.co/200x200/333/fff?text=05" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+05" alt="05">
+                    <img src="https://placehold.co/200x200/333/fff?text=06" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+06" alt="06">
+                    <img src="https://placehold.co/200x200/333/fff?text=07" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+07" alt="07">
+                    <img src="https://placehold.co/200x200/333/fff?text=08" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+08" alt="08">
+                    <img src="https://placehold.co/200x200/333/fff?text=09" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+09" alt="09">
+                    <img src="https://placehold.co/200x200/333/fff?text=10" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+10" alt="10">
+                    <img src="https://placehold.co/200x200/333/fff?text=11" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+11" alt="11">
+                    <img src="https://placehold.co/200x200/333/fff?text=12" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+12" alt="12">
+                    <img src="https://placehold.co/200x200/333/fff?text=13" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+13" alt="13">
+                    <img src="https://placehold.co/200x200/333/fff?text=14" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+14" alt="14">
+                    <img src="https://placehold.co/200x200/333/fff?text=15" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+15" alt="15">
+                    <img src="https://placehold.co/200x200/333/fff?text=16" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+16" alt="16">
+                    <img src="https://placehold.co/200x200/333/fff?text=17" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+17" alt="17">
+                    <img src="https://placehold.co/200x200/333/fff?text=18" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+18" alt="18">
+                    <img src="https://placehold.co/200x200/333/fff?text=19" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+19" alt="19">
+                    <img src="https://placehold.co/200x200/333/fff?text=20" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+20" alt="20">
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Interactive API & Events -->
+        <section>
+            <div class="section-header">
+                <h2>API Control & Events</h2>
+                <p>Programmatic control and lifecycle hooks.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="demo-card">
+                    <div class="gallery-api" style="margin-bottom: 20px;">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+21" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+21" alt="Image 21">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+22" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+22" alt="Image 22">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+23" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+23" alt="Image 23">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+24" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+24" alt="Image 24">
+                        <img src="https://placehold.co/500x500/333/fff?text=Thumb+25" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Image+25" alt="Image 25">
+                    </div>
+
+                    <div class="controls-row">
+                        <button class="btn" onclick="apiGallery.prev()">Previous</button>
+                        <button class="btn" onclick="apiGallery.next()">Next</button>
+                        <button class="btn btn-primary" onclick="apiGallery.open(0)">Open First</button>
+                        <button class="btn btn-primary" onclick="apiGallery.open()">Open Grid</button>
+                    </div>
+
+                    <div class="console-log" id="eventLog">
+                        <div style="color: #666;">// Event log initialized...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Configuration Builder -->
+        <section>
+            <div class="section-header">
+                <h2>Live Configurator</h2>
+                <p>Tweak options and generate your setup.</p>
+            </div>
+
+            <div class="builder-container">
+                <!-- Controls -->
+                <div class="builder-controls">
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="opt-useCarousel" checked>
+                            <label for="opt-useCarousel">Use Carousel</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="opt-loop">
+                            <label for="opt-loop">Loop Navigation</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="opt-showCounter" checked>
+                            <label for="opt-showCounter">Show Counter</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="opt-captions" checked>
+                            <label for="opt-captions">Enable Captions</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Caption Position</label>
+                        <select id="opt-captionPosition" class="form-control">
+                            <option value="bottom-center">Bottom Center (Overlay)</option>
+                            <option value="bottom-left">Bottom Left (Overlay)</option>
+                            <option value="outside-center">Outside Bottom</option>
+                            <option value="top-center">Top Center</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Columns (Responsive default if empty)</label>
+                        <input type="number" id="opt-columns" class="form-control" placeholder="Auto" min="1" max="12">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Modal Columns</label>
+                        <input type="number" id="opt-modalColumns" class="form-control" value="4" min="2" max="10">
+                    </div>
+
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 10px;" onclick="applyConfig()">Apply Changes</button>
+                </div>
+
+                <!-- Preview -->
+                <div class="builder-preview">
+                    <div id="interactive-gallery">
+                        <!-- Images injected by JS -->
+                    </div>
+                    <div class="code-snippet" style="margin-top: 20px;">
+                        <code id="config-code"></code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>VNS.Gallery Demo Reimagined</p>
+    </footer>
+
+    <!-- Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="dist/vns-gallery.js"></script>
+
+    <script>
+        // Global reference for API demo
+        let apiGallery;
+
+        $(document).ready(function() {
+            // 1. Basic
+            $('.gallery-basic').vnsGallery();
+
+            // 2. Static Grid
+            $('.gallery-static').vnsGallery({
+                useCarousel: false,
+                columns: 4,
+                maxImages: 8,
+                showMoreIndicator: true,
+                moreIndicatorAction: 'load'
+            });
+
+            // 3. Infinite Loop
+            $('.gallery-loop').vnsGallery({
+                loop: true,
+                enableDrag: true,
+                step: 1
+            });
+
+            // 4. High Density
+            $('.gallery-high-density').vnsGallery({
+                useCarousel: false,
+                columns: 10,
+                modalColumns: 6,
+                modalWidth: '95vw'
+            });
+
+            // 5. API & Events
+            const log = (msg) => {
+                const time = new Date().toLocaleTimeString([], { hour12: false, hour: '2-digit', minute:'2-digit', second:'2-digit' });
+                $('#eventLog').prepend(`<div><span class="time">[${time}]</span> ${msg}</div>`);
+            };
+
+            apiGallery = $('.gallery-api').vnsGallery({
+                onShow: () => log('Opening lightbox...'),
+                onShown: () => log('Lightbox opened.'),
+                onClose: () => log('Closing lightbox...'),
+                onChange: (idx) => log(`Navigating to index ${idx}`),
+                onChanged: (idx) => log(`Now viewing image ${idx + 1}`)
+            });
+
+            // 6. Interactive Configurator Initialization
+            applyConfig();
+        });
+
+        function applyConfig() {
+            const $container = $('#interactive-gallery');
+
+            // Destroy existing if present
+            if ($container.data('vnsGallery')) {
+                $container.data('vnsGallery').destroy();
+            }
+
+            // Reset HTML
+            $container.html(`
+                <img src="https://placehold.co/500x500/333/fff?text=Config+12" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Config+12" alt="Sunset over water" title="Sunset Caption">
+                <img src="https://placehold.co/500x500/333/fff?text=Config+13" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Config+13" alt="Mountain range" title="Mountain Caption">
+                <img src="https://placehold.co/500x500/333/fff?text=Config+14" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Config+14" alt="Night city" title="City Caption">
+                <img src="https://placehold.co/500x500/333/fff?text=Config+15" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Config+15" alt="Green forest" title="Forest Caption">
+                <img src="https://placehold.co/500x500/333/fff?text=Config+16" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Config+16" alt="Blue ocean" title="Ocean Caption">
+                <img src="https://placehold.co/500x500/333/fff?text=Config+17" data-fullsize="https://placehold.co/1200x800/111/fff?text=Full+Config+17" alt="Sand dunes" title="Desert Caption">
+            `);
+
+            // Gather options
+            const options = {
+                useCarousel: $('#opt-useCarousel').is(':checked'),
+                loop: $('#opt-loop').is(':checked'),
+                showCounter: $('#opt-showCounter').is(':checked'),
+                captions: $('#opt-captions').is(':checked'),
+                captionPosition: $('#opt-captionPosition').val(),
+                modalColumns: parseInt($('#opt-modalColumns').val()) || 4
+            };
+
+            const cols = $('#opt-columns').val();
+            if (cols) options.columns = parseInt(cols);
+
+            // Init
+            $container.vnsGallery(options);
+
+            // Update code view
+            const code = `$('.gallery').vnsGallery(${JSON.stringify(options, null, 4)});`;
+            $('#config-code').text(code);
+        }
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-1VDDWMRSTH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1VDDWMRSTH');
+</script><script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script>
+</body>
+</html>
