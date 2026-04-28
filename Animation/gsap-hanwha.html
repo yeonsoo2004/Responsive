@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한화 비주얼 확장 애니메이션</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #ffffff;
+        }
+
+        /* === 고정될 메인 컨테이너 === */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        /* 1. 텍스트 영역 (Z-index를 높여 이미지 위에 배치) */
+        .hero-title {
+            position: absolute;
+            top: 20%;      /* 화면 상단에서 20% 위치 */
+            left: 10%;
+            width: 100%;
+            /* text-align: center; */
+            font-size: 42px;
+            line-height: 1.5;
+            color: #000000; /* 초기 글자색: 검정 */
+            z-index: 10;   /* 이미지(1)보다 무조건 위에 오도록 설정 */
+        }
+
+        /* 2. 이미지 영역 (텍스트 아래, 초기 80% 크기) */
+        .kv-title-img {
+            position: absolute;
+            top: 50%;      /* 텍스트(20%)와 30% 간격을 두기 위해 50%에 배치 */
+            left: 10%;     /* 가로 80%를 화면 중앙에 맞추기 위해 양쪽 10% 여백 */
+            width: 80%;    /* 초기 가로 크기 80% */
+            height: 50vh;  /* 초기 세로 높이 */
+            z-index: 1;    /* 텍스트(10)보다 아래에 배치 */
+            overflow: hidden;
+        }
+
+        .kv-title-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 이미지가 찌그러지지 않고 영역에 꽉 차게 */
+            filter: brightness(1); /* 초기 밝기 */
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero-section">
+        <h2 class="hero-title">지속가능한 내일을 위한<br>한화의 담대한 도전은 멈추지 않습니다.</h2>
+        
+        <div class="kv-title-img">
+            <img src="assets/images/han.avif" alt="한화 비주얼 이미지">
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+<!-- ScrollSmoother requires ScrollTrigger -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".hero-section",
+                start: "top top",
+                end: "+=1500", // 1500px 동안 애니메이션 진행
+                pin: true,     // 화면 고정
+                scrub: 1       // 부드러운 스크롤 동기화
+            }
+        });
+
+        // 애니메이션 속성 (모두 동시에 실행되도록 파라미터 '0' 사용)
+        
+        // 1. 이미지가 화면 전체(100%)로 확장됨
+        tl.to(".kv-title-img", {
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100vh",
+            borderRadius: 0, // 꽉 찰 때는 모서리를 직각으로
+            duration: 1
+        }, 0)
+        
+        // 2. 확장된 이미지를 살짝 어둡게 (흰색 글씨 가독성 확보)
+        .to(".kv-title-img img", {
+            filter: "brightness(0.6)", 
+            duration: 1
+        }, 0)
+
+        // 3. 글자색이 흰색으로 변하며 화면 중앙으로 정렬됨
+        .to(".hero-title", {
+            color: "#ffffff",
+            top: "50%",                   // 화면 정중앙으로 이동
+            transform: "translateY(-50%)", // 완벽한 수직 중앙 정렬
+            duration: 1
+        }, 0);
+    </script>
+</body>
+</html>

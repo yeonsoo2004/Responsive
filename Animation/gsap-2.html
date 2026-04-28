@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한화 지속가능성 - 레이아웃 반전</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        /* === 1. KV 영역 === */
+        .kv-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        .kv-section h2 {
+            font-size: 40px;
+            font-weight: bold;
+            line-height: 1.6;
+        }
+
+        /* === 2. 스크롤 핀(고정) 영역 === */
+        .pin-section {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* [수정됨: 왼쪽 50%] 텍스트 영역 */
+        .left-panel {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .txt {
+            position: absolute;
+            font-size: 42px;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .txt1 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* [수정됨: 오른쪽 50%] 이미지 영역 */
+        .right-panel {
+            width: 50%;
+            height: 100%;
+            position: relative;
+            overflow: hidden; /* 밑에서 올라오는 이미지 숨김 처리 */
+        }
+
+        .img-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .img1 { background-image: url('assets/images/hanhwa-1.png'); z-index: 1; }
+        .img2 { background-image: url('assets/images/hanhwa-2.png'); z-index: 2; transform: translateY(100%); }
+        .img3 { background-image: url('assets/images/hanhwa-3.png'); z-index: 3; transform: translateY(100%); }
+
+        /* 애니메이션 이후 여백 */
+        .spacer {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+
+            <section class="kv-section">
+                <h2>
+                    지속가능한 내일을 위해<br>
+                    끊임없는 도전을 이어갑니다.
+                </h2>
+            </section>
+
+            <section class="pin-section">
+                <div class="left-panel">
+                    <div class="txt txt1">지속가능한 에너지</div>
+                    <div class="txt txt2">청정 모빌리티</div>
+                    <div class="txt txt3">글로벌 네트워크</div>
+                </div>
+
+                <div class="right-panel">
+                    <div class="img-wrap img1"></div>
+                    <div class="img-wrap img2"></div>
+                    <div class="img-wrap img3"></div>
+                </div>
+            </section>
+
+            <div class="spacer">애니메이션 종료 (다음 콘텐츠 영역)</div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+<!-- ScrollSmoother requires ScrollTrigger -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollSmoother.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 자바스크립트는 이전과 100% 동일하게 작동합니다!
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".pin-section",
+                start: "top top",
+                end: "+=2000",
+                pin: true,
+                scrub: 1
+            }
+        });
+
+        tl.to(".img2", { y: "0%", duration: 1 })
+          .to(".txt1", { opacity: 0, y: -30, duration: 0.5 }, "<")
+          .to(".txt2", { opacity: 1, y: 0, duration: 0.5 }, "<0.5");
+
+        tl.to(".img3", { y: "0%", duration: 1 })
+          .to(".txt2", { opacity: 0, y: -30, duration: 0.5 }, "<")
+          .to(".txt3", { opacity: 1, y: 0, duration: 0.5 }, "<0.5");
+    </script>
+</body>
+</html>
