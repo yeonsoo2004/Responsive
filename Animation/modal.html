@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .popup {
+            background-color: lightblue;
+            color: #fff;
+            width: 30%;
+            height: 300px;
+        }
+
+        .popup-bg {
+            background-color: rgba(0, 0, 0, .5);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+        }
+
+        .popup-title a {
+            position: relative;
+            color: 000;
+            background-color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 100px;
+            display: inline-block;
+            top: -20px;
+            right: -95%;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="event-btn">이벤트를 확인해주세요</button>
+    <div class="popup-bg">
+        <div class="popup">
+            <div class="popup-title">
+                <span><a href="#">X</a></span>
+            </div>
+            <div class="popup-body">
+                <h3>이벤트에 당첨되셨습니다.</h3>
+            </div>
+        </div>
+    </div>
+    <script src="../js/libs/jquery.min.js"></script>
+    <script>
+        // 방법1
+        // $(".popup-title a").click(function() {
+        //     $(".popup-bg").css("display","none");
+        // })
+
+        // $(".event-btn").click(function() {
+        //     $(".popup-bg").css("display","flex");
+        // })
+
+        // 방법2
+        $(".popup-title a").click(function () {
+            $(".popup-bg").hide();
+        })
+
+        $(".event-btn").click(function () {
+            $(".popup-bg").show();
+        })
+        
+        // 방법3
+        // hide랑 show말고 fadeIn(),fadeOut() 써도됨.
+    </script>
+</body>
+
+</html>
