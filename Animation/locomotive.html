@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        section {
+            height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .sec1 {
+            background-color: aquamarine;
+        }
+
+        .sec2 {
+            background-color: palevioletred;
+            align-items: center;
+        }
+
+        .sec3 {
+            height: 100vh;
+            align-items: center;
+        }
+
+        /* 
+           ✅ sec4: 3D 효과를 위한 설정 
+           - perspective: 3D 공간의 원근감을 줍니다 (값이 작을수록 왜곡이 심함)
+        */
+        .sec4 {
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            /* 왼쪽 정렬을 기본으로 설정 */
+            padding-left: 10%;
+            /* 전체 텍스트 묶음의 시작 여백 */
+            font-size: 20px;
+            perspective: 1200px;
+        }
+
+        p {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: 0.5s;
+        }
+
+        p.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 
+           ✅ 글자가 접혀있는 초기 상태
+        */
+        .sec4 h1 {
+            margin: 15px 0;
+            font-size: 50px;
+            font-weight: bold;
+            color: #202ded;
+            opacity: 0;
+
+            /* 위쪽 모서리를 경첩(축)으로 삼아 회전하도록 설정 */
+            transform-origin: top center;
+
+            /* 뒤로 90도 꺾여서 안 보이는 상태 + 살짝 위로 올라간 상태 */
+            transform: rotateX(-90deg) translateY(-20px);
+
+            /* 부드러운 펼쳐짐을 위한 애니메이션 (cubic-bezier로 텐션 조절) */
+            transition: opacity 0.8s ease, transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* 
+           ✅ 대각선 계단식 배치를 위한 margin-left 설정
+           각 줄마다 들여쓰기를 다르게 주어 계단처럼 보이게 합니다.
+        */
+        .sec4 h1:nth-child(1) {
+            margin-left: 0vw;
+        }
+
+        .sec4 h1:nth-child(2) {
+            margin-left: 8vw;
+            color: gray;
+        }
+
+        .sec4 h1:nth-child(3) {
+            margin-left: 16vw;
+        }
+
+        .sec4 h1:nth-child(4) {
+            margin-left: 64vw;
+            color: gray;
+        }
+
+        /* 
+           ✅ 화면에 나타나서 완전히 펼쳐진 상태
+        */
+        .sec4 h1.active {
+            opacity: 1;
+            /* 0도로 돌아오며 원래 위치로 안착 (탄성있게 펼쳐짐) */
+            transform: rotateX(0deg) translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <div data-scroll-container>
+        <section class="sec1" data-scroll-section>
+            <h1>시작 화면</h1>
+        </section>
+
+        <section class="sec2" data-scroll-section>
+            <p class="fade" data-scroll data-scroll-class="active">스크롤하면 등장</p>
+        </section>
+
+        <section class="sec3" data-scroll-section>
+            <div>
+                <h1 data-scroll data-scroll-speed="1.5">
+                    <img src="assets/images/img-3.avif" alt="Parallax 이미지">
+                </h1>
+            </div>
+        </section>
+
+        <!-- 
+           ✅ transition-delay를 통해 0.15초 간격으로 순차적으로 펄럭이며 내려옵니다.
+        -->
+        <section class="sec4" data-scroll-section>
+            <h1 data-scroll data-scroll-class="active" style="transition-delay: 0s;">지금까지</h1>
+            <h1 data-scroll data-scroll-class="active" style="transition-delay: 0.15s;">스크롤 트리거가</h1>
+            <h1 data-scroll data-scroll-class="active" style="transition-delay: 0.3s;">작동하는 애니메이션</h1>
+            <h1 data-scroll data-scroll-class="active" style="transition-delay: 0.45s;">입니다.</h1>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll/bundled/locomotive-scroll.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+    <script>
+        const locomotiveScroll = new LocomotiveScroll({
+            el: document.querySelector('[data-scroll-container]'),
+            smooth: true,
+            lerp: 0.1,
+        });
+    </script>
+</body>
+
+</html>

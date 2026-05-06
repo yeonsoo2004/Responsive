@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizontal Scroll Fix</title>
+    <!-- v5는 API가 달라져 GSAP 프록시와 맞지 않음 → 데모는 v4 고정 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'League Spartan', sans-serif;
+            overflow-x: hidden;
+            overscroll-behavior: none;
+        }
+
+        .container {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* 공통 섹션 스타일 */
+        .normal-section {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 10vw;
+            box-sizing: border-box;
+            background: navy;
+            color: white;
+        }
+
+        h1 {
+            font-size: 5vw;
+            font-family: 'Libre Baskerville', serif;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        /* 히어로: h1 좌상단, p 우하단 (대각선) */
+        .normal-section--hero {
+            justify-content: flex-start;
+            align-items: stretch;
+        }
+
+        .normal-section--hero .normal-section__inner {
+            position: relative;
+            flex: 1;
+            width: 100%;
+            min-height: calc(100vh - 100px);
+            box-sizing: border-box;
+        }
+
+        .normal-section--hero h1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+        }
+
+        .normal-section--hero p {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            margin: 0;
+            max-width: min(42ch, 42vw);
+            line-height: 1.55;
+            font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .normal-section--hero .normal-section__inner {
+                min-height: calc(100vh - 80px);
+            }
+
+            .normal-section--hero p {
+                max-width: min(100%, 90vw);
+            }
+        }
+
+        /* 
+           ✅ 가로 스크롤 섹션 스타일 
+        */
+        /* 핀 구간: 뷰포트에 고정되는 뷰포트 높이 박스 */
+        #sectionPin {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            background: white;
+            color: blue;
+        }
+
+        .pin-wrap {
+            height: 100vh;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            width: max-content;
+            padding: 0 10vw;
+            will-change: transform;
+        }
+
+        .pin-wrap > * {
+            flex-shrink: 0; /* 화면이 작아져도 내부 요소들이 찌그러지지 않도록 고정 */
+            margin-right: 5vw; /* 사진과 사진 사이의 간격 */
+        }
+
+        .pin-wrap h2 {
+            width: 40vw; /* 텍스트 영역의 가로 넓이 고정 */
+            font-size: 2rem;
+            line-height: 1.4;
+        }
+
+        .pin-wrap img {
+            height: 80vh;
+            width: auto;
+            object-fit: cover;
+        }
+
+        .pin-scroll-section {
+            position: relative;
+        }
+
+        /* 푸터: GIF 배경, 이미지·텍스트 가로 배치 */
+        .normal-section--footer {
+            position: relative;
+            background-color: #111;
+            background-image: url("assets/images/gif.gif");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        .normal-section--footer .footer__inner {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: clamp(1.5rem, 5vw, 3.5rem);
+        }
+
+        .normal-section--footer .footer__img {
+            display: block;
+            height: min(52vh, 400px);
+            width: auto;
+            max-width: 48%;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .normal-section--footer .footer__title {
+            margin: 0;
+            text-align: right;
+            font-size: clamp(1.25rem, 2.5vw, 2rem);
+            line-height: 1.35;
+            flex: 1;
+            min-width: 0;
+            text-shadow: 0 1px 14px rgba(0, 0, 0, 0.75);
+        }
+
+        .normal-section--footer .footer__title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .normal-section--footer .footer__title a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .normal-section--footer .footer__inner {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .normal-section--footer .footer__img {
+                max-width: 85%;
+                height: auto;
+                max-height: 45vh;
+            }
+
+            .normal-section--footer .footer__title {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" data-scroll-container>
+        
+        <section class="normal-section normal-section--hero" data-scroll-section data-bgcolor="#bcb8ad" data-textcolor="#032f35">
+            <div class="normal-section__inner">
+                <h1 data-scroll data-scroll-speed="1">
+                    <span>BlueBenny</span><br>
+                    <span>Media</span>
+                </h1>
+                <p data-scroll data-scroll-speed="2">Home to the catalog of one of the most<br>
+                    celebrated photographers in the entertainment industry.</p>
+            </div>
+        </section>
+
+        <!-- 
+           🔥 핵심 수정 사항 🔥
+           겉을 감싸는 section에만 data-scroll-section을 주고, 
+           안쪽의 #sectionPin은 GSAP만 제어하도록 분리했습니다.
+        -->
+        <section data-scroll-section class="pin-scroll-section">
+            <div id="sectionPin">
+                <div class="pin-wrap">
+                    <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h2>
+                    <img src="assets/images/img-1.avif" alt="img1">
+                    <img src="assets/images/img-2.avif" alt="img2">
+                    <img src="assets/images/img-3.avif" alt="img3">
+                    <img src="assets/images/img-4.avif" alt="img4">
+                    <img src="assets/images/img-5.avif" alt="img5">
+                </div>
+            </div>
+        </section>
+
+        <!-- 푸터 섹션 -->
+        <section class="normal-section normal-section--footer" data-scroll-section>
+            <div class="footer__inner">
+                <img class="footer__img" src="https://pbs.twimg.com/media/EtV4MTqXUAIRIQH?format=jpg&name=large" alt="E-BENNY">
+                <h2 class="footer__title" data-scroll data-scroll-speed="1"><a href="#">Designed by<br> E-BENNY</a></h2>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 스크립트 로드 -->
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+    <script>
+        // ✅ 이미지 등 모든 요소가 로딩된 후 실행해야 너비(Width) 계산이 정확합니다.
+        window.addEventListener("load", function () {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const pageContainer = document.querySelector(".container");
+
+            /* 1. Locomotive Scroll 초기화 */
+            const scroller = new LocomotiveScroll({
+                el: pageContainer,
+                smooth: true,
+                smartphone: { smooth: true }, // 모바일 기기에서도 부드러운 스크롤 활성화
+                tablet: { smooth: true }
+            });
+
+            /* 2. Locomotive Scroll과 GSAP Proxy 연결 */
+            scroller.on("scroll", ScrollTrigger.update);
+
+            /* Locomotive는 smooth 시 컨테이너에 transform을 씀 → 핀은 반드시 transform 모드 */
+            ScrollTrigger.scrollerProxy(pageContainer, {
+                scrollTop(value) {
+                    return arguments.length
+                        ? scroller.scrollTo(value, 0, 0)
+                        : scroller.scroll.instance.scroll.y;
+                },
+                getBoundingClientRect() {
+                    return {
+                        left: 0,
+                        top: 0,
+                        width: window.innerWidth,
+                        height: window.innerHeight
+                    };
+                },
+                pinType: "transform"
+            });
+
+            /* 3. 가로 스크롤: 세로 스크롤 진행도에 맞춰 pin-wrap을 X로 이동 */
+            const pinSection = document.querySelector("#sectionPin");
+            const pinWrap = document.querySelector(".pin-wrap");
+
+            function horizontalScrollDistance() {
+                return Math.max(pinWrap.scrollWidth - window.innerWidth, 0);
+            }
+
+            gsap.to(pinWrap, {
+                x: () => -horizontalScrollDistance(),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: pinSection,
+                    scroller: pageContainer,
+                    pin: true,
+                    pinSpacing: true,
+                    anticipatePin: 1,
+                    scrub: 1,
+                    start: "top top",
+                    /* 세로로 밀리는 거리 ≈ 가로로 밀어야 할 픽셀 (체감 1:1) */
+                    end: () => "+=" + (horizontalScrollDistance() + window.innerHeight * 0.25),
+                    invalidateOnRefresh: true
+                }
+            });
+
+            /* 4. 크기·스크롤 동기화 */
+            ScrollTrigger.addEventListener("refresh", () => scroller.update());
+
+            const syncScrollTrigger = () => {
+                scroller.update();
+                ScrollTrigger.refresh();
+            };
+
+            syncScrollTrigger();
+            requestAnimationFrame(() => requestAnimationFrame(syncScrollTrigger));
+            window.addEventListener("resize", syncScrollTrigger);
+        });
+    </script>
+</body>
+
+</html>
